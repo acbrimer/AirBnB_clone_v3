@@ -32,21 +32,22 @@ def delete_one(state_id):
     return jsonify({}), 200
 
 
-@app_views.route('/states', methods=['POST'])
+@app_views.route('/states/', methods=['POST'])
 def create():
-    if not request.is_json():
+    if not request.is_json:
         return "Not a JSON", 400
     state_json = request.get_json()
     if "name" not in state_json:
         return "Missing name", 400
-    new_state = State(state_json)
-    storage.new(new_state)
-    return jsonify(storage.get(State, new_state.id).to_dict())
+    new_state = State()
+    new_state.__dict__.update(state_json)
+    new_state.save()
+    return jsonify(new_state.to_dict()), 201
 
 
 @app_views.route('/states/<string:state_id>', methods=['PUT'])
 def update(state_id):
-    if not request.is_json():
+    if not request.is_json:
         return "Not a JSON", 400
     state = storage.get(State, state_id)
     if state is None:
