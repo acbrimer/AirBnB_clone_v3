@@ -77,5 +77,5 @@ def update_city(city_id):
         del(data['updated_at'])
     for key, val in data.items():
         setattr(city, key, val)
-    city.save()
+    storage.save()
     return city, 200
