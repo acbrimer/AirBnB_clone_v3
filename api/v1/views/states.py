@@ -61,5 +61,5 @@ def update_state(state_id):
         del(data['updated_at'])
     for key, val in data.items():
         setattr(state, key, val)
-    state.save()
+    storage.save()
     return state, 200
