@@ -8,13 +8,13 @@ from models.state import State
 
 
 @app_views.route('/states', methods=['GET'])
-def get_list():
+def get_states_list():
     states = [s.to_dict() for s in storage.all(State).values()]
     return jsonify(states)
 
 
 @app_views.route('/states/<string:state_id>', methods=['GET'])
-def get_one(state_id):
+def get_one_state(state_id):
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
@@ -22,7 +22,7 @@ def get_one(state_id):
 
 
 @app_views.route('/states/<string:state_id>', methods=['DELETE'])
-def delete_one(state_id):
+def delete_one_state(state_id):
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
@@ -33,7 +33,7 @@ def delete_one(state_id):
 
 
 @app_views.route('/states/', methods=['POST'])
-def create():
+def create_state():
     if not request.is_json:
         return "Not a JSON", 400
     state_json = request.get_json()
@@ -46,7 +46,7 @@ def create():
 
 
 @app_views.route('/states/<string:state_id>', methods=['PUT'])
-def update(state_id):
+def update_state(state_id):
     if not request.is_json:
         return "Not a JSON", 400
     state = storage.get(State, state_id)
