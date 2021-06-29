@@ -75,6 +75,7 @@ def update_city(city_id):
         del(data['created_at'])
     if 'updated_at' in data:
         del(data['updated_at'])
-    city.__dict__.update(data)
+    for key, val in data.items():
+        setattr(city, key, val)
     city.save()
     return city, 200
