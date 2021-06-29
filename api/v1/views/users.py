@@ -54,11 +54,11 @@ def update_user(user_id):
         abort(404)
     data = request.get_json()
     if 'id' in data:
-        del(data['id'])
+        del data['id']
     if 'created_at' in data:
-        del(data['created_at'])
+        del data['created_at']
     if 'updated_at' in data:
-        del(data['updated_at'])
+        del data['updated_at']
     for key, val in data.items():
         setattr(user, key, val)
     storage.save()
