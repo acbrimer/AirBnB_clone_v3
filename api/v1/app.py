@@ -2,7 +2,7 @@
 """Module for api version of AirBnb app"""
 
 
-from flask import Flask
+from flask import Flask, jsonify
 from os import getenv
 from api.v1.views import app_views
 import models
@@ -14,6 +14,11 @@ app.register_blueprint(app_views)
 @app.teardown_appcontext
 def teardown(self):
     models.storage.close()
+
+
+@app.errorhandler(404)
+def handle404(self):
+    return jsonify({"error": "Not found"})
 
 
 if __name__ == "__main__":
