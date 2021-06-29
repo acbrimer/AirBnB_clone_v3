@@ -53,14 +53,8 @@ def update_amenity(amenity_id):
     if amenity is None:
         abort(404)
     data = request.get_json()
-    if 'id' in data:
-        del(data['id'])
-    if 'created_at' in data:
-        del(data['created_at'])
-    if 'updated_at' in data:
-        del(data['updated_at'])
     for key, val in data.items():
-        setattr(amenity, key, val)
-    storage.save()
-    storage.reload()
+        if key not in ['id', 'created_at', 'updated_at']:
+            setattr(amenity, key, val)
+    amenity.save()
     return amenity, 200

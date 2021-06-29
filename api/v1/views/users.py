@@ -22,7 +22,7 @@ def get_one_user(user_id):
 
 
 @app_views.route('/users/<string:user_id>', methods=['DELETE'])
-def delete_one_amenity(user_id):
+def delete_one_user(user_id):
     user = storage.get(User, user_id)
     if user is None:
         abort(404)
@@ -53,14 +53,8 @@ def update_user(user_id):
     if user is None:
         abort(404)
     data = request.get_json()
-    if 'id' in data:
-        del data['id']
-    if 'created_at' in data:
-        del data['created_at']
-    if 'updated_at' in data:
-        del data['updated_at']
     for key, val in data.items():
-        setattr(user, key, val)
-    storage.save()
-    storage.reload()
+        if key not in ['id', 'created_at', 'updated_at']:
+            setattr(user, key, val)
+    user.save()
     return user, 200

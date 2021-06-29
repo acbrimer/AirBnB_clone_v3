@@ -53,13 +53,8 @@ def update_state(state_id):
     if state is None:
         abort(404)
     data = request.get_json()
-    if 'id' in data:
-        del(data['id'])
-    if 'created_at' in data:
-        del(data['created_at'])
-    if 'updated_at' in data:
-        del(data['updated_at'])
     for key, val in data.items():
-        setattr(state, key, val)
-    storage.save()
+        if key not in ['id', 'created_at', 'updated_at']:
+            setattr(state, key, val)
+    state.save()
     return state, 200

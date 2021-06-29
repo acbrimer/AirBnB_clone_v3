@@ -69,13 +69,8 @@ def update_city(city_id):
     if city is None:
         abort(404)
     data = request.get_json()
-    if 'id' in data:
-        del(data['id'])
-    if 'created_at' in data:
-        del(data['created_at'])
-    if 'updated_at' in data:
-        del(data['updated_at'])
     for key, val in data.items():
-        setattr(city, key, val)
-    storage.save()
+        if key not in ['id', 'created_at', 'updated_at']:
+            setattr(city, key, val)
+    city.save()
     return city, 200
