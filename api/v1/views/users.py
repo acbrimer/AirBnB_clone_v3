@@ -45,7 +45,7 @@ def create_user():
     return jsonify(user_json.to_dict()), 201
 
 
-@app_views.route('/users/<string:user_id>/', methods=['PUT'])
+@app_views.route('/users/<string:user_id>', methods=['PUT'])
 def update_user(user_id):
     if not request.is_json:
         return "Not a JSON", 400
@@ -57,4 +57,4 @@ def update_user(user_id):
         if key not in ['id', 'created_at', 'updated_at']:
             setattr(user, key, val)
     user.save()
-    return jsonify(user.to_dict()), 200
+    return user.to_dict(), 200

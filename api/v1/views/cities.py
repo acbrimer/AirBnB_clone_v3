@@ -61,7 +61,7 @@ def create_city(state_id):
     return jsonify(new_city.to_dict()), 201
 
 
-@app_views.route('/cities/<string:city_id>/', methods=['PUT'])
+@app_views.route('/cities/<string:city_id>', methods=['PUT'])
 def update_city(city_id):
     if not request.is_json:
         return "Not a JSON", 400
@@ -73,4 +73,4 @@ def update_city(city_id):
         if key not in ['id', 'created_at', 'updated_at']:
             setattr(city, key, val)
     city.save()
-    return jsonify(city.to_dict()), 200
+    return city.to_dict(), 200
