@@ -66,7 +66,7 @@ def create_place(city_id):
     return jsonify(new_place.to_dict()), 201
 
 
-@app_views.route('/places/<string:place_id>/', methods=['PUT'])
+@app_views.route('/places/<string:place_id>', methods=['PUT'])
 def update_place(place_id):
     if not request.is_json:
         return "Not a JSON", 400
@@ -78,4 +78,4 @@ def update_place(place_id):
         if key not in ['id', 'created_at', 'updated_at', 'user_id', 'city_id']:
             setattr(place, key, val)
     place.save()
-    return jsonify(place.to_dict()), 200
+    return place.to_dict(), 200
