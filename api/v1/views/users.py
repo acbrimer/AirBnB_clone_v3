@@ -36,16 +36,16 @@ def delete_one_user(user_id):
 def create_user():
     if not request.is_json:
         return "Not a JSON", 400
-    amenity_json = request.get_json()
-    if "name" not in amenity_json:
+    user_json = request.get_json()
+    if "name" not in user_json:
         return "Missing name", 400
-    new_user = User()
-    new_user.__dict__.update(amenity_json)
-    new_user.save()
-    return jsonify(new_user.to_dict()), 201
+    user_json = User()
+    user_json.__dict__.update(user_json)
+    user_json.save()
+    return jsonify(user_json.to_dict()), 201
 
 
-@app_views.route('/users/<string:user_id>', methods=['PUT'])
+@app_views.route('/users/<string:user_id>/', methods=['PUT'])
 def update_user(user_id):
     if not request.is_json:
         return "Not a JSON", 400
