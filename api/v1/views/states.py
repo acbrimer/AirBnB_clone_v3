@@ -59,6 +59,7 @@ def update_state(state_id):
         del(data['created_at'])
     if 'updated_at' in data:
         del(data['updated_at'])
-    state.__dict__.update(data)
-    storage.save()
+    for key, val in data.items():
+        setattr(state, key, val)
+    state.save()
     return state, 200
