@@ -43,23 +43,23 @@ class DBStorage:
 
     def get(self, cls, id):
         """Gets a single record of cls by id"""
-        return self.__session.query(classes[cls]).get(id)
+        return self.__session.query(cls).get(id)
     
     def count(self, cls=None):
         """Counts classes"""
         if cls is None:
             c = 0
-            for count_cls in classes:
-                c += self.__session.query(func.count(classes[count_cls].id))
+            for count_cls in classes.values():
+                c += self.__session.query(func.count(count_cls.id)).scalar()
             return c
-        return self.__session.query(func.count(classes[cls].id))
+        return self.__session.query(func.count(cls.id)).scalar()
     
     def all(self, cls=None):
         """query on the current database session"""
         new_dict = {}
         for clss in classes:
             if cls is None or cls is classes[clss] or cls is clss:
-                objs = self.__session.query(classes[clss]).all()
+                objs = self.__session.query(classes[clss])
                 for obj in objs:
                     key = obj.__class__.__name__ + '.' + obj.id
                     new_dict[key] = obj
