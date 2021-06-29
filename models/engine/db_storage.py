@@ -15,6 +15,7 @@ from os import getenv
 import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
+from sqlalchemy import func
 
 classes = {"Amenity": Amenity, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
@@ -49,8 +50,9 @@ class DBStorage:
         if cls is None:
             c = 0
             for count_cls in classes:
-                c += self.__session.query(classes[count_cls]).count()
-        return self.__session.query(classes[cls]).count()
+                c += self.__session.query(func.count(classes[count_cls].id))
+            return c
+        return self.__session.query(func.count(classes[cls].id))
     
     def all(self, cls=None):
         """query on the current database session"""

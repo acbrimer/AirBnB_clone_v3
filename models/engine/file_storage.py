@@ -37,7 +37,7 @@ class FileStorage:
     def get(self, cls, id):
         """Gets a single record of cls by id"""
         key = "{}.{}".format(cls.__name__, id)
-        return self.all(cls)[key] if self.all(cls)[key] else None
+        return self.all(cls)[key] if key in self.all(cls) else None
 
     def count(self, cls=None):
         if cls is None:
