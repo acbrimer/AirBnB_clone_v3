@@ -60,5 +60,5 @@ def update_state(state_id):
     if 'updated_at' in data:
         del(data['updated_at'])
     state.__dict__.update(data)
-    state.save()
+    storage.save()
     return state, 200
