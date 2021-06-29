@@ -57,4 +57,4 @@ def update_amenity(amenity_id):
         if key not in ['id', 'created_at', 'updated_at']:
             setattr(amenity, key, val)
     amenity.save()
-    return amenity, 200
+    return amenity.to_dict(), 200
