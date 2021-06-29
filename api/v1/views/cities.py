@@ -16,11 +16,14 @@ def get_cities_list():
 
 @app_views.route('/states/<string:state_id>/cities', methods=['GET'])
 def get_cities_list_by_state(state_id):
-    print(storage.get(State, state_id).cities)
-    cities = [c.to_dict() for c in storage.get(State, state_id).cities]
+    state = storage.get(State, state_id)
+    if state is None:
+        abort(404)
+    cities = [c.to_dict() for c in state.cities]
     if cities is None:
         abort(404)
     return jsonify(cities)
+
 
 @app_views.route('/cities/<string:city_id>', methods=['GET'])
 def get_one_city(city_id):
